@@ -3,7 +3,7 @@ const Gameboard = (() => {
   let layout = Array(9).fill("");
 
   const resetLayout = () => {
-    layout = Array(9).fill("");
+    layout.forEach((item, index, array) => (array[index] = ""));
     renderBoardLayout();
   };
 
@@ -70,12 +70,17 @@ const Player = (name, token, type) => {
 };
 
 const Game = (Gameboard, Player1, Player2) => {
-  let activePlayer = [Player1, Player2][Math.round(Math.random())];
-  let gameOn = false;
-  let winnerText = "It's a Tie!";
+  let activePlayer;
+  let gameOn;
+  let winnerText;
+  const gameOverContainer = document.querySelector(".game-over-container");
 
   const startGame = () => {
+    activePlayer = [Player1, Player2][Math.round(Math.random())];
     gameOn = true;
+    winnerText = "It's a Tie!";
+    gameOverContainer.style.visibility = "hidden";
+    Gameboard.resetLayout();
     Gameboard.renderBoardLayout();
     if (activePlayer.type === "cpu") {
       move(activePlayer.cpuDecision());
@@ -106,8 +111,9 @@ const Game = (Gameboard, Player1, Player2) => {
 
   const handleGameOver = () => {
     gameOn = false;
-    const gameOverContainer = document.querySelector(".game-over-container");
     const winnerNameSpan = document.querySelector(".winner-name");
+    const newGameButton = document.querySelector(".new-game");
+    newGameButton.addEventListener("click", startGame);
 
     gameOverContainer.style.visibility = "visible";
     winnerNameSpan.textContent = winnerText;
