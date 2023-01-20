@@ -13,7 +13,7 @@ const Gameboard = (() => {
     [6, 7, 8],
     [0, 3, 6],
     [1, 4, 7],
-    [6, 7, 8],
+    [2, 5, 8],
     [0, 4, 8],
     [2, 4, 6],
   ];
@@ -105,12 +105,8 @@ const Game = (Gameboard, Player1, Player2) => {
   const move = (position) => {
     if (gameOn && Gameboard.movePermitted(position)) {
       Gameboard.registerMove(activePlayer, position);
-      console.log(
-        "Start of move function, active player is",
-        activePlayer.name
-      );
 
-      if (!gameIsWon()) {
+      if (!gameIsWon() && !gameIsTie()) {
         if (activePlayer.name === Player1.name) {
           activePlayer = Player2;
         } else {
@@ -120,11 +116,13 @@ const Game = (Gameboard, Player1, Player2) => {
         if (activePlayer.type === "cpu") {
           move(activePlayer.cpuDecision());
         }
-      } else {
+      } else if (gameIsWon()) {
+        console.log("Game Over, winner is", activePlayer.name);
+        gameOn = false;
+      } else if (gameIsTie()) {
+        console.log("Game over, game is a tie");
         gameOn = false;
       }
-
-      console.log("End of move function, active player is", activePlayer.name);
     }
   };
 
