@@ -129,7 +129,7 @@ const Game = (Gameboard, Player1, Player2) => {
   return { activePlayer, move, startGame, gameIsWon, gameIsTie };
 };
 
-majkul = Player("Majkul", "O", "cpu");
-najt = Player("Nájt", "X", "human");
-activeGame = Game(Gameboard, majkul, najt);
+const majkul = Player("Majkul", "O", "cpu");
+const najt = Player("Nájt", "X", "human");
+const activeGame = Game(Gameboard, majkul, najt);
 activeGame.startGame();
