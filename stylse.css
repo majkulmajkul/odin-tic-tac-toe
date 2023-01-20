@@ -1,0 +1,13 @@
+.board-layout{
+    display: inline-grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    background-color: azure;
+    gap: 1rem;
+}
+
+.board-cell{
+    width: 2rem;
+    height: 2rem;
+    background-color: beige;
+    text-align: center;
+}
