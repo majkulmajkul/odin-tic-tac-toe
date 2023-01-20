@@ -72,6 +72,7 @@ const Player = (name, token, type) => {
 const Game = (Gameboard, Player1, Player2) => {
   let activePlayer = [Player1, Player2][Math.round(Math.random())];
   let gameOn = false;
+  let winnerText = "It's a Tie!";
 
   const startGame = () => {
     gameOn = true;
@@ -89,6 +90,7 @@ const Game = (Gameboard, Player1, Player2) => {
           player.token === Gameboard.layout[condition[1]] &&
           player.token === Gameboard.layout[condition[2]]
         ) {
+          winnerText = `The winner is ${player.name}!`;
           return true;
         }
       }
@@ -100,6 +102,15 @@ const Game = (Gameboard, Player1, Player2) => {
     if (!gameIsWon()) {
       return !Gameboard.layout.some((item) => item === "");
     }
+  };
+
+  const handleGameOver = () => {
+    gameOn = false;
+    const gameOverContainer = document.querySelector(".game-over-container");
+    const winnerNameSpan = document.querySelector(".winner-name");
+
+    gameOverContainer.style.visibility = "visible";
+    winnerNameSpan.textContent = winnerText;
   };
 
   const move = (position) => {
@@ -117,11 +128,9 @@ const Game = (Gameboard, Player1, Player2) => {
           move(activePlayer.cpuDecision());
         }
       } else if (gameIsWon()) {
-        console.log("Game Over, winner is", activePlayer.name);
-        gameOn = false;
+        handleGameOver();
       } else if (gameIsTie()) {
-        console.log("Game over, game is a tie");
-        gameOn = false;
+        handleGameOver();
       }
     }
   };
