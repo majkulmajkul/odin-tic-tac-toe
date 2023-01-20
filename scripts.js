@@ -129,7 +129,32 @@ const Game = (Gameboard, Player1, Player2) => {
   return { activePlayer, move, startGame, gameIsWon, gameIsTie };
 };
 
-const majkul = Player("Majkul", "O", "cpu");
-const najt = Player("Nájt", "X", "human");
-const activeGame = Game(Gameboard, majkul, najt);
-activeGame.startGame();
+const Player1 = Player("Majkul", "O", "");
+const Player2 = Player("Nájt", "X", "cpu");
+const activeGame = Game(Gameboard, Player1, Player2);
+
+const setup = (() => {
+  const setupFormContainer = document.querySelector(".setup-form-container");
+  const setupForm = document.querySelector(".setup-form");
+
+  const handleSetupForm = (Player) => {
+    const playerName = document.querySelector("#player-name-input").value;
+    const playerType = document.querySelector("#player-type-input").value;
+    Player.name = playerName;
+    Player.type = playerType;
+    setupFormContainer.style.visibility = "hidden";
+    activeGame.startGame();
+  };
+
+  const prepareSetupForm = () => {
+    setupForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      handleSetupForm(Player1);
+    });
+    setupFormContainer.style.visibility = "visible";
+  };
+
+  return { prepareSetupForm };
+})();
+
+setup.prepareSetupForm();
