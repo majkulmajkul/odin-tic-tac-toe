@@ -54,7 +54,7 @@ const Gameboard = (() => {
   };
 })();
 
-class NewPlayer {
+class Player {
   constructor(name, token, type, playerNumber, wins) {
     this.name = name;
     this.token = token;
@@ -69,6 +69,9 @@ class NewPlayer {
     const choice =
       emptyIndices[Math.floor(Math.random() * emptyIndices.length)];
 
+    setTimeout(() => {
+      console.log("waiting"), 500;
+    });
     return choice;
   };
 
@@ -129,7 +132,9 @@ const Game = (() => {
     activePlayerNameDisplay.textContent = activePlayer.name;
     Gameboard.resetLayout();
     if (activePlayer.type === "cpu") {
-      move(activePlayer.cpuDecision());
+      setTimeout(() => {
+        move(activePlayer.cpuDecision());
+      }, 500);
     }
   };
 
@@ -185,7 +190,9 @@ const Game = (() => {
         activePlayerNameDisplay.textContent = activePlayer.name;
 
         if (activePlayer.type === "cpu") {
-          move(activePlayer.cpuDecision());
+          setTimeout(() => {
+            move(activePlayer.cpuDecision());
+          }, 500);
         }
       } else if (gameIsWon()) {
         handleGameOver();
@@ -207,8 +214,8 @@ const Game = (() => {
 })();
 
 const setup = (() => {
-  const Player1 = new NewPlayer("", "O", "", 1, 0);
-  const Player2 = new NewPlayer("", "X", "", 2, 0);
+  const Player1 = new Player("", "O", "", 1, 0);
+  const Player2 = new Player("", "X", "", 2, 0);
   const setupFormContainer = document.querySelector(".setup-form-container");
   const setupForm = document.querySelector(".setup-form");
 
