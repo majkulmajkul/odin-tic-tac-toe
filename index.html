@@ -12,12 +12,21 @@
       <form action="" class="setup-form">
         <input
           type="text"
-          id="player-name-input"
+          id="player1-name-input"
           placeholder="Enter name for Player1"
         />
-        <select name="player-type-input" id="player-type-input">
-          <option value="human">Human</option>
+        <select name="player1-type-input" id="player1-type-input">
+          <option value="human" selected>Human</option>
           <option value="cpu">CPU</option>
+        </select>
+        <input
+          type="text"
+          id="player2-name-input"
+          placeholder="Enter name for Player2"
+        />
+        <select name="player2-type-input" id="player2-type-input">
+          <option value="human">Human</option>
+          <option value="cpu" selected>CPU</option>
         </select>
         <button>Let's Go!</button>
       </form>
@@ -27,17 +36,17 @@
     </div>
     <div class="players-and-board">
       <div class="p1-details">
-        <h6>Player Name</h6>
-        <h5>Valaki | X</h5>
+        <h6>Player1 Name</h6>
+        <h5><span class="player1-name"></span> | O</h5>
         <h6>Wins</h6>
-        <h5>0</h5>
+        <h5 class="player1-wins">0</h5>
       </div>
       <div class="board-layout"></div>
       <div class="p2-details">
-        <h6>Player Name</h6>
-        <h5>Valami | O</h5>
+        <h6>Player2 Name</h6>
+        <h5><span class="player2-name"></span> | X</h5>
         <h6>Wins</h6>
-        <h5>1</h5>
+        <h5 class="player2-wins">0</h5>
       </div>
     </div>
     <div class="game-over-container" style="visibility: hidden">

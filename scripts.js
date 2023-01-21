@@ -73,17 +73,22 @@ const Game = (Gameboard, Player1, Player2) => {
   let activePlayer;
   let gameOn;
   let winnerText;
+  let winnerName;
+  const player1NameContainer = document.querySelector(".player1-name");
+  const player2NameContainer = document.querySelector(".player2-name");
+  const player1WinsDisplay = document.querySelector(".player1-wins");
+  const player2WinsDisplay = document.querySelector(".player2-wins");
   const gameOverContainer = document.querySelector(".game-over-container");
   const activePlayerNameConteiner = document.querySelector(
     ".active-player-name-container"
   );
   const boardAndPlayersDiv = document.querySelector(".players-and-board");
-
   const activePlayerNameDisplay = document.querySelector(".active-player-name");
 
   const startGame = () => {
     activePlayer = [Player1, Player2][Math.round(Math.random())];
     gameOn = true;
+    winnerName = "";
     winnerText = "It's a Tie!";
     boardAndPlayersDiv.style.visibility = "visible";
     gameOverContainer.style.visibility = "hidden";
@@ -104,6 +109,7 @@ const Game = (Gameboard, Player1, Player2) => {
           player.token === Gameboard.layout[condition[1]] &&
           player.token === Gameboard.layout[condition[2]]
         ) {
+          winnerName = player.name;
           winnerText = `The winner is ${player.name}!`;
           return true;
         }
@@ -120,6 +126,15 @@ const Game = (Gameboard, Player1, Player2) => {
 
   const handleGameOver = () => {
     gameOn = false;
+    if (winnerName) {
+      if (winnerName === Player1.name) {
+        const wins = parseInt(player1WinsDisplay.textContent);
+        player1WinsDisplay.textContent = wins + 1;
+      } else {
+        const wins = parseInt(player2WinsDisplay.textContent);
+        player2WinsDisplay.textContent = wins + 1;
+      }
+    }
     activePlayerNameConteiner.style.visibility = "hidden";
     const winnerNameSpan = document.querySelector(".winner-name");
     const newGameButton = document.querySelector(".new-game");
@@ -161,6 +176,8 @@ const Game = (Gameboard, Player1, Player2) => {
     gameIsTie,
     activePlayerNameConteiner,
     boardAndPlayersDiv,
+    player1NameContainer,
+    player2NameContainer,
   };
 };
 
@@ -172,11 +189,19 @@ const setup = (() => {
   const setupFormContainer = document.querySelector(".setup-form-container");
   const setupForm = document.querySelector(".setup-form");
 
-  const handleSetupForm = (Player) => {
-    const playerName = document.querySelector("#player-name-input").value;
-    const playerType = document.querySelector("#player-type-input").value;
-    Player.name = playerName;
-    Player.type = playerType;
+  const handleSetupForm = (Player1, Player2) => {
+    const player1Name = document.querySelector("#player1-name-input").value;
+    const player1Type = document.querySelector("#player1-type-input").value;
+    const player2Name = document.querySelector("#player2-name-input").value;
+    const player2Type = document.querySelector("#player2-type-input").value;
+    Player1.name = player1Name;
+    Player1.type = player1Type;
+    Player2.name = player2Name;
+    Player2.type = player2Type;
+
+    activeGame.player1NameContainer.textContent = player1Name;
+    activeGame.player2NameContainer.textContent = player2Name;
+
     setupFormContainer.style.visibility = "hidden";
     activeGame.startGame();
   };
@@ -184,7 +209,7 @@ const setup = (() => {
   const prepareSetupForm = () => {
     setupForm.addEventListener("submit", (e) => {
       e.preventDefault();
-      handleSetupForm(Player1);
+      handleSetupForm(Player1, Player2);
     });
     setupFormContainer.style.visibility = "visible";
     activeGame.boardAndPlayersDiv.style.visibility = "hidden";
