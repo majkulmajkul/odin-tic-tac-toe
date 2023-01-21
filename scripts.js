@@ -54,9 +54,7 @@ const Gameboard = (() => {
   };
 })();
 
-const Player = (name, token, type) => {
-  let wins = 0;
-
+const Player = (name, token, type, playerNumber, wins) => {
   const cpuDecision = () => {
     const emptyIndices = Gameboard.layout
       .map((item, index) => (item === "" ? index : false))
@@ -68,18 +66,27 @@ const Player = (name, token, type) => {
     return choice;
   };
 
-  return { name, token, type, cpuDecision, wins };
+  const incrementWins = () => {
+    wins++;
+  };
+
+  const renderWins = () => {
+    const playerWinsDisplay = document.querySelector(
+      `.player${playerNumber}-wins`
+    );
+    playerWinsDisplay.textContent = wins;
+  };
+
+  return { name, token, type, cpuDecision, wins, renderWins, incrementWins };
 };
 
 const Game = (Gameboard, Player1, Player2) => {
   let activePlayer;
   let gameOn;
   let winnerText;
-  let winnerName;
+  let winnerPlayer;
   const player1NameContainer = document.querySelector(".player1-name");
   const player2NameContainer = document.querySelector(".player2-name");
-  const player1WinsDisplay = document.querySelector(".player1-wins");
-  const player2WinsDisplay = document.querySelector(".player2-wins");
   const gameOverContainer = document.querySelector(".game-over-container");
   const activePlayerNameConteiner = document.querySelector(
     ".active-player-name-container"
@@ -90,7 +97,7 @@ const Game = (Gameboard, Player1, Player2) => {
   const startGame = () => {
     activePlayer = [Player1, Player2][Math.round(Math.random())];
     gameOn = true;
-    winnerName = "";
+    winnerPlayer = undefined;
     winnerText = "It's a Tie!";
     boardAndPlayersDiv.style.visibility = "visible";
     gameOverContainer.style.visibility = "hidden";
@@ -111,7 +118,7 @@ const Game = (Gameboard, Player1, Player2) => {
           player.token === Gameboard.layout[condition[1]] &&
           player.token === Gameboard.layout[condition[2]]
         ) {
-          winnerName = player.name;
+          winnerPlayer = player;
           winnerText = `The winner is ${player.name}!`;
           return true;
         }
@@ -128,14 +135,9 @@ const Game = (Gameboard, Player1, Player2) => {
 
   const handleGameOver = () => {
     gameOn = false;
-    if (winnerName) {
-      if (winnerName === Player1.name) {
-        Player1.wins += 1;
-        player1WinsDisplay.textContent = Player1.wins;
-      } else {
-        Player2.wins += 1;
-        player2WinsDisplay.textContent = Player2.wins;
-      }
+    if (winnerPlayer) {
+      winnerPlayer.incrementWins();
+      winnerPlayer.renderWins();
     }
     activePlayerNameConteiner.style.visibility = "hidden";
     const winnerNameSpan = document.querySelector(".winner-name");
@@ -183,8 +185,8 @@ const Game = (Gameboard, Player1, Player2) => {
   };
 };
 
-const Player1 = Player("Majkul", "O", "");
-const Player2 = Player("Mikrobi", "X", "huaman");
+const Player1 = Player("Majkul", "O", "", 1, 0);
+const Player2 = Player("Mikrobi", "X", "huaman", 2, 0);
 const activeGame = Game(Gameboard, Player1, Player2);
 
 const setup = (() => {
