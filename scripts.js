@@ -128,8 +128,8 @@ const Game = (() => {
   const boardAndPlayersDiv = document.querySelector(".players-and-board");
   const activePlayerNameDisplay = document.querySelector(".active-player-name");
 
-  const startGame = () => {
-    activePlayer = [Player1, Player2][Math.round(Math.random())];
+  const startGame = (p1, p2) => {
+    activePlayer = [p1, p2][Math.round(Math.random())];
     gameOn = true;
     winnerPlayer = undefined;
     winnerText = "It's a Tie!";
@@ -138,7 +138,6 @@ const Game = (() => {
     activePlayerNameConteiner.style.visibility = "visible";
     activePlayerNameDisplay.textContent = activePlayer.name;
     Gameboard.resetLayout();
-    Gameboard.renderBoardLayout();
     if (activePlayer.type === "cpu") {
       move(activePlayer.cpuDecision());
     }
@@ -242,10 +241,10 @@ const setup = (() => {
     }
 
     setupFormContainer.style.visibility = "hidden";
-    Game.startGame();
+    Game.startGame(Player1, Player2);
   };
 
-  const prepareSetupForm = () => {
+  const prepareSetupForm = (Player1, Player2) => {
     setupForm.addEventListener("submit", (e) => {
       e.preventDefault();
       handleSetupForm(Player1, Player2);
@@ -258,4 +257,4 @@ const setup = (() => {
   return { prepareSetupForm };
 })();
 
-setup.prepareSetupForm();
+setup.prepareSetupForm(Player1, Player2);
