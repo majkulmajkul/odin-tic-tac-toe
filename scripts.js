@@ -77,7 +77,41 @@ const Player = (name, token, type, playerNumber, wins) => {
     playerWinsDisplay.textContent = wins;
   };
 
-  return { name, token, type, cpuDecision, wins, renderWins, incrementWins };
+  const changeName = (newName) => {
+    name = newName;
+  };
+
+  const renderName = () => {
+    const playerNameContainer = document.querySelector(
+      `.player${playerNumber}-name`
+    );
+    playerNameContainer.textContent = name;
+  };
+
+  const changeType = (newType) => {
+    type = newType;
+  };
+
+  const renderType = () => {
+    const playerTypeContainer = document.querySelector(
+      `.player${playerNumber}-type`
+    );
+    playerTypeContainer.textContent = type;
+  };
+
+  return {
+    name,
+    token,
+    type,
+    cpuDecision,
+    wins,
+    renderWins,
+    incrementWins,
+    changeName,
+    renderName,
+    changeType,
+    renderType,
+  };
 };
 
 const Game = (Gameboard, Player1, Player2) => {
@@ -198,13 +232,15 @@ const setup = (() => {
     const player1Type = document.querySelector("#player1-type-input").value;
     const player2Name = document.querySelector("#player2-name-input").value;
     const player2Type = document.querySelector("#player2-type-input").value;
-    Player1.name = player1Name;
-    Player1.type = player1Type;
-    Player2.name = player2Name;
-    Player2.type = player2Type;
+    Player1.changeName(player1Name);
+    Player1.changeType(player1Type);
+    Player2.changeName(player2Name);
+    Player2.changeType(player2Type);
 
-    activeGame.player1NameContainer.textContent = player1Name;
-    activeGame.player2NameContainer.textContent = player2Name;
+    for (const player of [Player1, Player2]) {
+      player.renderName();
+      player.renderType();
+    }
 
     setupFormContainer.style.visibility = "hidden";
     activeGame.startGame();
