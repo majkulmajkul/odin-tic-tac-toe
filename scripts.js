@@ -114,6 +114,9 @@ const Player = (name, token, type, playerNumber, wins) => {
   };
 };
 
+const Player1 = Player("", "O", "", 1, 0);
+const Player2 = Player("Mikrobi", "X", "", 2, 0);
+
 const Game = (() => {
   let activePlayer;
   let gameOn;
@@ -128,8 +131,8 @@ const Game = (() => {
   const boardAndPlayersDiv = document.querySelector(".players-and-board");
   const activePlayerNameDisplay = document.querySelector(".active-player-name");
 
-  const startGame = (p1, p2) => {
-    activePlayer = [p1, p2][Math.round(Math.random())];
+  const startGame = () => {
+    activePlayer = [Player1, Player2][Math.round(Math.random())];
     gameOn = true;
     winnerPlayer = undefined;
     winnerText = "It's a Tie!";
@@ -218,14 +221,11 @@ const Game = (() => {
   };
 })();
 
-const Player1 = Player("", "O", "", 1, 0);
-const Player2 = Player("Mikrobi", "X", "", 2, 0);
-
 const setup = (() => {
   const setupFormContainer = document.querySelector(".setup-form-container");
   const setupForm = document.querySelector(".setup-form");
 
-  const handleSetupForm = (Player1, Player2) => {
+  const handleSetupForm = () => {
     const player1Name = document.querySelector("#player1-name-input").value;
     const player1Type = document.querySelector("#player1-type-input").value;
     const player2Name = document.querySelector("#player2-name-input").value;
@@ -241,13 +241,13 @@ const setup = (() => {
     }
 
     setupFormContainer.style.visibility = "hidden";
-    Game.startGame(Player1, Player2);
+    Game.startGame();
   };
 
-  const prepareSetupForm = (Player1, Player2) => {
+  const prepareSetupForm = () => {
     setupForm.addEventListener("submit", (e) => {
       e.preventDefault();
-      handleSetupForm(Player1, Player2);
+      handleSetupForm();
     });
     setupFormContainer.style.visibility = "visible";
     Game.boardAndPlayersDiv.style.visibility = "hidden";
@@ -257,4 +257,4 @@ const setup = (() => {
   return { prepareSetupForm };
 })();
 
-setup.prepareSetupForm(Player1, Player2);
+setup.prepareSetupForm();
