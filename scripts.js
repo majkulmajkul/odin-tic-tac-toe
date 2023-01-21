@@ -74,12 +74,19 @@ const Game = (Gameboard, Player1, Player2) => {
   let gameOn;
   let winnerText;
   const gameOverContainer = document.querySelector(".game-over-container");
+  const activePlayerNameConteiner = document.querySelector(
+    ".active-player-name-container"
+  );
+
+  const activePlayerNameDisplay = document.querySelector(".active-player-name");
 
   const startGame = () => {
     activePlayer = [Player1, Player2][Math.round(Math.random())];
     gameOn = true;
     winnerText = "It's a Tie!";
     gameOverContainer.style.visibility = "hidden";
+    activePlayerNameConteiner.style.visibility = "visible";
+    activePlayerNameDisplay.textContent = activePlayer.name;
     Gameboard.resetLayout();
     Gameboard.renderBoardLayout();
     if (activePlayer.type === "cpu") {
@@ -111,6 +118,7 @@ const Game = (Gameboard, Player1, Player2) => {
 
   const handleGameOver = () => {
     gameOn = false;
+    activePlayerNameConteiner.style.visibility = "hidden";
     const winnerNameSpan = document.querySelector(".winner-name");
     const newGameButton = document.querySelector(".new-game");
     newGameButton.addEventListener("click", startGame);
@@ -130,6 +138,8 @@ const Game = (Gameboard, Player1, Player2) => {
           activePlayer = Player1;
         }
 
+        activePlayerNameDisplay.textContent = activePlayer.name;
+
         if (activePlayer.type === "cpu") {
           move(activePlayer.cpuDecision());
         }
@@ -141,11 +151,18 @@ const Game = (Gameboard, Player1, Player2) => {
     }
   };
 
-  return { activePlayer, move, startGame, gameIsWon, gameIsTie };
+  return {
+    activePlayer,
+    move,
+    startGame,
+    gameIsWon,
+    gameIsTie,
+    activePlayerNameConteiner,
+  };
 };
 
 const Player1 = Player("Majkul", "O", "");
-const Player2 = Player("Nájt", "X", "cpu");
+const Player2 = Player("Nájt", "X", "huaman");
 const activeGame = Game(Gameboard, Player1, Player2);
 
 const setup = (() => {
@@ -167,6 +184,7 @@ const setup = (() => {
       handleSetupForm(Player1);
     });
     setupFormContainer.style.visibility = "visible";
+    activeGame.activePlayerNameConteiner.style.visibility = "hidden";
   };
 
   return { prepareSetupForm };
