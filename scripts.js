@@ -54,8 +54,14 @@ const Gameboard = (() => {
   };
 })();
 
-const Player = (name, token, type, playerNumber, wins) => {
-  const cpuDecision = () => {
+class NewPlayer {
+  constructor(name, token, type, playerNumber, wins) {
+    this.name = name;
+    this.token = token;
+    (this.type = type), (this.playerNumber = playerNumber), (this.wins = wins);
+  }
+
+  cpuDecision = () => {
     const emptyIndices = Gameboard.layout
       .map((item, index) => (item === "" ? index : false))
       .filter((item) => item === 0 || (item && item));
@@ -66,64 +72,45 @@ const Player = (name, token, type, playerNumber, wins) => {
     return choice;
   };
 
-  const incrementWins = () => {
-    wins++;
+  incrementWins = () => {
+    this.wins++;
   };
 
-  const renderWins = () => {
+  renderWins = () => {
     const playerWinsDisplay = document.querySelector(
-      `.player${playerNumber}-wins`
+      `.player${this.playerNumber}-wins`
     );
-    playerWinsDisplay.textContent = wins;
+    playerWinsDisplay.textContent = this.wins;
   };
 
-  const changeName = (newName) => {
-    name = newName;
+  changeName = (newName) => {
+    this.name = newName;
   };
 
-  const renderName = () => {
+  renderName = () => {
     const playerNameContainer = document.querySelector(
-      `.player${playerNumber}-name`
+      `.player${this.playerNumber}-name`
     );
-    playerNameContainer.textContent = name;
+    playerNameContainer.textContent = this.name;
   };
 
-  const changeType = (newType) => {
-    type = newType;
+  changeType = (newType) => {
+    this.type = newType;
   };
 
-  const renderType = () => {
+  renderType = () => {
     const playerTypeContainer = document.querySelector(
-      `.player${playerNumber}-type`
+      `.player${this.playerNumber}-type`
     );
-    playerTypeContainer.textContent = type;
+    playerTypeContainer.textContent = this.type;
   };
-
-  return {
-    name,
-    token,
-    type,
-    cpuDecision,
-    wins,
-    renderWins,
-    incrementWins,
-    changeName,
-    renderName,
-    changeType,
-    renderType,
-  };
-};
-
-const Player1 = Player("", "O", "", 1, 0);
-const Player2 = Player("Mikrobi", "X", "", 2, 0);
+}
 
 const Game = (() => {
   let activePlayer;
   let gameOn;
   let winnerText;
   let winnerPlayer;
-  const player1NameContainer = document.querySelector(".player1-name");
-  const player2NameContainer = document.querySelector(".player2-name");
   const gameOverContainer = document.querySelector(".game-over-container");
   const activePlayerNameConteiner = document.querySelector(
     ".active-player-name-container"
@@ -216,12 +203,12 @@ const Game = (() => {
     gameIsTie,
     activePlayerNameConteiner,
     boardAndPlayersDiv,
-    player1NameContainer,
-    player2NameContainer,
   };
 })();
 
 const setup = (() => {
+  const Player1 = new NewPlayer("", "O", "", 1, 0);
+  const Player2 = new NewPlayer("", "X", "", 2, 0);
   const setupFormContainer = document.querySelector(".setup-form-container");
   const setupForm = document.querySelector(".setup-form");
 
@@ -234,6 +221,8 @@ const setup = (() => {
     Player1.changeType(player1Type);
     Player2.changeName(player2Name);
     Player2.changeType(player2Type);
+
+    console.log("Player1 from HandleSetupForm", Player1);
 
     for (const player of [Player1, Player2]) {
       player.renderName();
@@ -254,7 +243,9 @@ const setup = (() => {
     Game.activePlayerNameConteiner.style.visibility = "hidden";
   };
 
-  return { prepareSetupForm };
+  return { prepareSetupForm, Player1, Player2 };
 })();
 
+const Player1 = setup.Player1;
+const Player2 = setup.Player2;
 setup.prepareSetupForm();
