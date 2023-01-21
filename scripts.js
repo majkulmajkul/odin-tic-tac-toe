@@ -25,7 +25,7 @@ const Gameboard = (() => {
       boardCell.className = "board-cell";
       boardCell.id = `board-cell-${index}`;
       boardCell.textContent = item;
-      boardCell.addEventListener("click", (e) => activeGame.move(index));
+      boardCell.addEventListener("click", (e) => Game.move(index));
       boardLayoutContainer.appendChild(boardCell);
     });
   };
@@ -114,7 +114,7 @@ const Player = (name, token, type, playerNumber, wins) => {
   };
 };
 
-const Game = (Gameboard, Player1, Player2) => {
+const Game = (() => {
   let activePlayer;
   let gameOn;
   let winnerText;
@@ -217,11 +217,10 @@ const Game = (Gameboard, Player1, Player2) => {
     player1NameContainer,
     player2NameContainer,
   };
-};
+})();
 
 const Player1 = Player("", "O", "", 1, 0);
 const Player2 = Player("Mikrobi", "X", "", 2, 0);
-const activeGame = Game(Gameboard, Player1, Player2);
 
 const setup = (() => {
   const setupFormContainer = document.querySelector(".setup-form-container");
@@ -243,7 +242,7 @@ const setup = (() => {
     }
 
     setupFormContainer.style.visibility = "hidden";
-    activeGame.startGame();
+    Game.startGame();
   };
 
   const prepareSetupForm = () => {
@@ -252,8 +251,8 @@ const setup = (() => {
       handleSetupForm(Player1, Player2);
     });
     setupFormContainer.style.visibility = "visible";
-    activeGame.boardAndPlayersDiv.style.visibility = "hidden";
-    activeGame.activePlayerNameConteiner.style.visibility = "hidden";
+    Game.boardAndPlayersDiv.style.visibility = "hidden";
+    Game.activePlayerNameConteiner.style.visibility = "hidden";
   };
 
   return { prepareSetupForm };
