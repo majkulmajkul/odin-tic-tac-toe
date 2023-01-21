@@ -185,8 +185,8 @@ const Game = (Gameboard, Player1, Player2) => {
   };
 };
 
-const Player1 = Player("Majkul", "O", "", 1, 0);
-const Player2 = Player("Mikrobi", "X", "huaman", 2, 0);
+const Player1 = Player("", "O", "", 1, 0);
+const Player2 = Player("Mikrobi", "X", "", 2, 0);
 const activeGame = Game(Gameboard, Player1, Player2);
 
 const setup = (() => {
