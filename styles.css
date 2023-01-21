@@ -9,5 +9,13 @@
     width: 2rem;
     height: 2rem;
     background-color: beige;
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.players-and-board{
+    display: flex;
+    
 }

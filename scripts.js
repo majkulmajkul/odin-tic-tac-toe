@@ -77,6 +77,7 @@ const Game = (Gameboard, Player1, Player2) => {
   const activePlayerNameConteiner = document.querySelector(
     ".active-player-name-container"
   );
+  const boardAndPlayersDiv = document.querySelector(".players-and-board");
 
   const activePlayerNameDisplay = document.querySelector(".active-player-name");
 
@@ -84,6 +85,7 @@ const Game = (Gameboard, Player1, Player2) => {
     activePlayer = [Player1, Player2][Math.round(Math.random())];
     gameOn = true;
     winnerText = "It's a Tie!";
+    boardAndPlayersDiv.style.visibility = "visible";
     gameOverContainer.style.visibility = "hidden";
     activePlayerNameConteiner.style.visibility = "visible";
     activePlayerNameDisplay.textContent = activePlayer.name;
@@ -158,6 +160,7 @@ const Game = (Gameboard, Player1, Player2) => {
     gameIsWon,
     gameIsTie,
     activePlayerNameConteiner,
+    boardAndPlayersDiv,
   };
 };
 
@@ -184,6 +187,7 @@ const setup = (() => {
       handleSetupForm(Player1);
     });
     setupFormContainer.style.visibility = "visible";
+    activeGame.boardAndPlayersDiv.style.visibility = "hidden";
     activeGame.activePlayerNameConteiner.style.visibility = "hidden";
   };
 
