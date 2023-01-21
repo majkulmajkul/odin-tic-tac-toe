@@ -55,6 +55,8 @@ const Gameboard = (() => {
 })();
 
 const Player = (name, token, type) => {
+  let wins = 0;
+
   const cpuDecision = () => {
     const emptyIndices = Gameboard.layout
       .map((item, index) => (item === "" ? index : false))
@@ -66,7 +68,7 @@ const Player = (name, token, type) => {
     return choice;
   };
 
-  return { name, token, type, cpuDecision };
+  return { name, token, type, cpuDecision, wins };
 };
 
 const Game = (Gameboard, Player1, Player2) => {
@@ -128,11 +130,11 @@ const Game = (Gameboard, Player1, Player2) => {
     gameOn = false;
     if (winnerName) {
       if (winnerName === Player1.name) {
-        const wins = parseInt(player1WinsDisplay.textContent);
-        player1WinsDisplay.textContent = wins + 1;
+        Player1.wins += 1;
+        player1WinsDisplay.textContent = Player1.wins;
       } else {
-        const wins = parseInt(player2WinsDisplay.textContent);
-        player2WinsDisplay.textContent = wins + 1;
+        Player2.wins += 1;
+        player2WinsDisplay.textContent = Player2.wins;
       }
     }
     activePlayerNameConteiner.style.visibility = "hidden";
@@ -182,7 +184,7 @@ const Game = (Gameboard, Player1, Player2) => {
 };
 
 const Player1 = Player("Majkul", "O", "");
-const Player2 = Player("Nájt", "X", "huaman");
+const Player2 = Player("Mikrobi", "X", "huaman");
 const activeGame = Game(Gameboard, Player1, Player2);
 
 const setup = (() => {
