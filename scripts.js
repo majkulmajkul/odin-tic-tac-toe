@@ -69,9 +69,6 @@ class Player {
     const choice =
       emptyIndices[Math.floor(Math.random() * emptyIndices.length)];
 
-    setTimeout(() => {
-      console.log("waiting"), 500;
-    });
     return choice;
   };
 
