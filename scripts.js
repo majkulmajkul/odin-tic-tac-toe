@@ -226,8 +226,6 @@ const setup = (() => {
     Player2.changeName(player2Name);
     Player2.changeType(player2Type);
 
-    console.log("Player1 from HandleSetupForm", Player1);
-
     for (const player of [Player1, Player2]) {
       player.renderName();
       player.renderType();
