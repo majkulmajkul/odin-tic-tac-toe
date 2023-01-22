@@ -27,6 +27,10 @@ label{
     display: block;
 }
 
+input, select {
+    margin-bottom: 0.5rem;
+}
+
 
 
 .board-layout{
@@ -80,7 +84,7 @@ button{
     display: grid;
     grid-template-columns: 1;
     grid-template-rows: 4fr 1fr 5fr 2fr;
-    margin-top: -7rem;
+    margin-top: -8rem;
 
 }
 
