@@ -6,63 +6,71 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tic-Tac-Toe</title>
     <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=VT323&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
-    <div class="setup-form-container" style="visibility: hidden">
-      <form action="" class="setup-form">
-        <input
-          type="text"
-          id="player1-name-input"
-          placeholder="Enter name for Player1"
-          required
-        />
-        <select name="player1-type-input" id="player1-type-input">
-          <option value="human" selected>Human</option>
-          <option value="cpu">CPU</option>
-        </select>
-        <input
-          type="text"
-          id="player2-name-input"
-          placeholder="Enter name for Player2"
-          value="Mikrobi"
-        />
-        <select name="player2-type-input" id="player2-type-input">
-          <option value="human">Human</option>
-          <option value="cpu" selected>CPU</option>
-        </select>
-        <button>Let's Go!</button>
-      </form>
-    </div>
-    <div class="active-player-name-container">
-      <h6><span class="active-player-name"></span>'s turn</h6>
-    </div>
-    <div class="players-and-board">
-      <div class="p1-details">
-        <h6>Player1 Name</h6>
-        <h5>
-          <span class="player1-name"></span> | O |
-          <span class="player1-type"></span>
-        </h5>
-        <h6>Wins</h6>
-        <h5 class="player1-wins">0</h5>
+    <div class="main-container">
+      <div class="setup-form-container" style="visibility: hidden">
+        <form action="" class="setup-form">
+          <input
+            type="text"
+            id="player1-name-input"
+            placeholder="Enter name for Player1"
+            required
+          />
+          <select name="player1-type-input" id="player1-type-input">
+            <option value="human" selected>Human</option>
+            <option value="cpu">CPU</option>
+          </select>
+          <input
+            type="text"
+            id="player2-name-input"
+            placeholder="Enter name for Player2"
+            value="Mikrobi"
+          />
+          <select name="player2-type-input" id="player2-type-input">
+            <option value="human">Human</option>
+            <option value="cpu" selected>CPU</option>
+          </select>
+          <button>Let's Go!</button>
+        </form>
       </div>
-      <div class="board-layout"></div>
-      <div class="p2-details">
-        <h6>Player2 Name</h6>
-        <h5>
-          <span class="player2-name"></span> | X |
-          <span class="player2-type"></span>
-        </h5>
-        <h6>Wins</h6>
-        <h5 class="player2-wins">0</h5>
+      <div class="active-player-name-container">
+        <h4><span class="active-player-name"></span>'s turn</h4>
       </div>
-    </div>
-    <div class="game-over-container" style="visibility: hidden">
-      <h5>Game Over</h5>
-      <h4 class="winner-name"></h4>
+      <div class="players-and-board">
+        <div class="p1-details">
+          <h6>Player1 Name</h6>
+          <h5>
+            <span class="player1-name"></span> | O |
+            <span class="player1-type"></span>
+          </h5>
+          <h6>Wins</h6>
+          <h5 class="player1-wins">0</h5>
+        </div>
+        <div class="board-layout"></div>
+        <div class="p2-details">
+          <h6>Player2 Name</h6>
+          <h5>
+            <span class="player2-name"></span> | X |
+            <span class="player2-type"></span>
+          </h5>
+          <h6>Wins</h6>
+          <h5 class="player2-wins">0</h5>
+        </div>
+      </div>
+      <div class="game-over-container" style="visibility: hidden">
+        <h5>Game Over</h5>
+        <h4 class="winner-name"></h4>
 
-      <button class="new-game">New Game</button>
+        <button class="new-game">New Game</button>
+      </div>
+      <script src="./scripts.js"></script>
     </div>
-    <script src="./scripts.js"></script>
   </body>
 </html>
